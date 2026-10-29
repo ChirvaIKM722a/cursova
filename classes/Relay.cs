@@ -1,21 +1,18 @@
-﻿using System;
+namespace BuildingLightingSystem;
 
-namespace BuildingLightingSystem
+public class Relay
 {
-    public class Relay
+    public bool IsOn { get; private set; }
+
+    public void TurnOn()
     {
-        public bool IsOn { get; private set; }
+        IsOn = true;
+        Console.WriteLine("Реле: Живлення світильників УВІМКНЕНО.");
+    }
 
-        public void TurnOn()
-        {
-            IsOn = true;
-            Console.WriteLine("Реле: Живлення світильників УВІМКНЕНО."); 
-        }
-
-        public void TurnOff()
-        {
-            IsOn = false;
-            Console.WriteLine("Реле: Живлення світильників BИМКНЕНО."); 
-        }
+    public void TurnOff()
+    {
+        IsOn = false;
+        Console.WriteLine("Реле: Живлення світильників ВИМКНЕНО.");
     }
 }

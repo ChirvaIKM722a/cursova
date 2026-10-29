@@ -1,20 +1,24 @@
-﻿using System;
+namespace BuildingLightingSystem;
 
-namespace BuildingLightingSystem
+public class MotionSensor : Sensor
 {
-    public class MotionSensor
+    // true - рух виявлено, false - руху немає
+    public bool IsMotionDetected { get; set; }
+
+    public MotionSensor(bool initialState) : base("motion", "bool")
     {
-        // Стан: true - рух виявлено, false - руху немає 
-        public bool IsMotionDetected { get; set; }
+        IsMotionDetected = initialState;
+        Value = initialState ? 1 : 0;
+    }
 
-        public MotionSensor(bool initialState)
-        {
-            IsMotionDetected = initialState;
-        }
+    public bool CheckMotion() => IsMotionDetected;
 
-        public bool CheckMotion()
-        {
-            return IsMotionDetected;
-        }
+    // Імітація PIR-датчика
+    public override double ReadValue()
+    {
+        if (Rng.NextDouble() < 0.3)
+            IsMotionDetected = !IsMotionDetected;
+        Value = IsMotionDetected ? 1 : 0;
+        return Value;
     }
 }

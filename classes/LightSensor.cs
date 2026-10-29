@@ -1,20 +1,24 @@
-﻿using System;
+namespace BuildingLightingSystem;
 
-namespace BuildingLightingSystem
+public class LightSensor : Sensor
 {
-    public class LightSensor
+    // Поточний рівень природного освітлення
+    public double CurrentLightLevel { get; set; }
+
+    public LightSensor(double initialLevel) : base("light", "lx")
     {
-        // Поточний рівень природного освітлення (в Люксах) 
-        public double CurrentLightLevel { get; set; }
+        CurrentLightLevel = initialLevel;
+        Value = initialLevel;
+    }
 
-        public LightSensor(double initialLevel)
-        {
-            CurrentLightLevel = initialLevel;
-        }
+    public double GetLightLevel() => CurrentLightLevel;
 
-        public double GetLightLevel()
-        {
-            return CurrentLightLevel;
-        }
+    // Імітація зміни природного освітлення
+    public override double ReadValue()
+    {
+        CurrentLightLevel += Rng.NextDouble() * 120 - 60;
+        CurrentLightLevel = Math.Clamp(CurrentLightLevel, 0, 1000);
+        Value = CurrentLightLevel;
+        return Value;
     }
 }
