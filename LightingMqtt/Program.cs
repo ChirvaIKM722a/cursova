@@ -9,19 +9,19 @@ const string BrokerHost = "127.0.0.1";
 const int BrokerPort = 1883;
 const string BaseTopic = "lighting/1/sensors/room1";
 
-// Предметна модель з ЛР3
+
 var lightSensor = new LightSensor(250);
 var motionSensor = new MotionSensor(true);
 var controlSystem = new LightingControlSystem(lightSensor, motionSensor);
 
-// Сенсор -> MQTT-тема -> одиниця виміру
+
 var sensors = new List<SensorConfiguration>
 {
     new(lightSensor,  $"{BaseTopic}/light",  "lx"),
     new(motionSensor, $"{BaseTopic}/motion", "bool")
 };
 
-// Підключення до брокера
+
 var factory = new MqttClientFactory();
 using var mqttClient = factory.CreateMqttClient();
 
@@ -33,7 +33,6 @@ var options = new MqttClientOptionsBuilder()
 await mqttClient.ConnectAsync(options);
 Console.WriteLine($"Підключено до MQTT-брокера {BrokerHost}:{BrokerPort}");
 
-// Цикл симулятора: 10 циклів із затримкою 2 с
 for (int iteration = 1; iteration <= 10; iteration++)
 {
     Console.WriteLine($"--- Цикл {iteration} ---");
@@ -58,7 +57,7 @@ for (int iteration = 1; iteration <= 10; iteration++)
         Console.WriteLine($"[PUB] {topic} {payload}");
     }
 
-    // Логіка керування з ЛР3 працює на тих самих сенсорах
+
     controlSystem.UpdateSystemState();
 
     await Task.Delay(TimeSpan.FromSeconds(2));
