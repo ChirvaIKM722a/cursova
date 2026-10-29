@@ -1,4 +1,7 @@
-namespace BuildingLightingSystem;
+using BuildingLightingSystem.Actuators;
+using BuildingLightingSystem.Sensors;
+
+namespace BuildingLightingSystem.Control;
 
 public class LightingControlSystem
 {

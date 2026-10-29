@@ -1,4 +1,4 @@
-namespace BuildingLightingSystem;
+namespace BuildingLightingSystem.Actuators;
 
 public class Relay
 {
