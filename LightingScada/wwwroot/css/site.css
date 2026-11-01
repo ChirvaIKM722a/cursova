@@ -3,9 +3,9 @@
   :root { --bg:#161b22; --fg:#e6edf3; --card:#1f2630; --muted:#8b98a6; --off:#5b6674; }
 }
 body { margin:0; background:var(--bg); color:var(--fg); font-family:Segoe UI, Arial, sans-serif; }
-.top { padding:12px 24px; background:#24527a; color:#fff; }
+.top { padding:12px 24px; background:#24527a; color:#fff; display:flex; justify-content:space-between; align-items:center; }
 .top h1 { margin:0; font-size:20px; font-weight:600; }
-main { max-width:900px; margin:16px auto; padding:0 16px; }
+main { max-width:1300px; margin:16px auto; padding:0 16px; }
 .status-bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; color:var(--muted); font-size:14px; }
 .badge { padding:4px 10px; border-radius:12px; color:#fff; font-size:13px; }
 .badge.on { background:var(--ok); }
@@ -29,3 +29,35 @@ svg { width:100%; height:auto; background:var(--card); border-radius:10px; }
 .ind-value { fill:var(--fg); font-size:26px; font-weight:700; }
 .ind-unit { fill:var(--muted); font-size:14px; }
 .note { color:var(--muted); font-size:13px; }
+
+
+.scada-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 1rem;
+  line-height: 1.1;
+}
+.scada-clock b { font-size: 1.3rem; font-family: Consolas, monospace; }
+.scada-clock small { color: rgba(255,255,255,.8); }
+
+
+.scada-page {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.scada-page svg { flex: 1; min-width: 0; }
+
+
+.cal {
+  border-collapse: collapse;
+  text-align: center;
+  background: var(--card);
+  color: var(--fg);
+}
+.cal caption { caption-side: top; text-align: center; font-weight: bold; color: var(--fg); padding-bottom: 6px; }
+.cal th, .cal td { width: 34px; padding: 4px; border: 1px solid var(--off); }
+.cal th { color: var(--muted); font-weight: normal; }
+.cal .weekend { color: #c0392b; }
+.cal .today { background: #4a7a5a; color: #fff; font-weight: bold; }

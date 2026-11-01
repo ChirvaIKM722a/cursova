@@ -1,5 +1,10 @@
 @{
     ViewData["Title"] = "Мнемосхема";
+    var uk = new System.Globalization.CultureInfo("uk-UA");
+    DateTime today = DateTime.Today;
+    DateTime first = new DateTime(today.Year, today.Month, 1);
+    int offset = ((int)first.DayOfWeek + 6) % 7; // початок тижня — понеділок
+    int days = DateTime.DaysInMonth(today.Year, today.Month);
 }
 
 <div class="status-bar">
@@ -7,17 +12,19 @@
     <span id="last-update">Оновлено: —</span>
 </div>
 
+<div class="scada-page">
 <svg id="scheme" viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Мнемосхема освітлення приміщення">
 
     <rect x="40" y="40" width="680" height="360" rx="6" class="room" />
     <text x="60" y="68" class="title">Приміщення room1</text>
+
 
     <rect x="80" y="110" width="130" height="150" class="window" />
     <line x1="145" y1="110" x2="145" y2="260" class="window-line" />
     <line x1="80" y1="185" x2="210" y2="185" class="window-line" />
     <text x="145" y="285" class="label" text-anchor="middle">Вікно</text>
 
- 
+
     <g transform="translate(60,310)">
         <rect width="170" height="70" rx="8" class="indicator" id="ind-light" />
         <text x="12" y="22" class="ind-title">Освітленість</text>
@@ -25,14 +32,14 @@
         <text x="158" y="52" class="ind-unit" text-anchor="end" id="light-unit">лк</text>
     </g>
 
- 
+
     <line x1="400" y1="40" x2="400" y2="120" class="wire" />
     <circle id="lamp-glow" cx="400" cy="150" r="70" class="glow" opacity="0" />
     <circle id="lamp" cx="400" cy="150" r="28" class="lamp" />
     <text x="400" y="205" class="label" text-anchor="middle">Світильник</text>
     <text id="lamp-state" x="400" y="225" class="sub" text-anchor="middle">вимкнено</text>
 
-  
+
     <circle cx="640" cy="90" r="18" class="pir" />
     <circle cx="640" cy="90" r="6" id="pir-dot" class="pir-dot" />
     <text x="640" y="130" class="label" text-anchor="middle">PIR-датчик</text>
@@ -45,6 +52,30 @@
         <text x="198" y="52" class="ind-unit" text-anchor="end" id="motion-unit">0/1</text>
     </g>
 </svg>
+
+    <table class="cal">
+        <caption>@uk.TextInfo.ToTitleCase(today.ToString("MMMM yyyy", uk))</caption>
+        <tr>
+            <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Нд</th>
+        </tr>
+        <tr>
+            @for (int i = 0; i < offset; i++)
+            {
+                <td></td>
+            }
+            @for (int d = 1; d <= days; d++)
+            {
+                bool isWeekend = (offset + d - 1) % 7 >= 5;
+                string css = d == today.Day ? "today" : (isWeekend ? "weekend" : "");
+                <td class="@css">@d</td>
+                if ((offset + d) % 7 == 0 && d < days)
+                {
+                    @:</tr><tr>
+                }
+            }
+        </tr>
+    </table>
+</div>
 
 <p class="note">Стан світильника розраховується на мнемосхемі за показаннями датчиків
 (рух і освітленість &lt; 300 лк). Уставки та керування виконавчими пристроями в цій роботі не реалізуються.</p>

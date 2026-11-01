@@ -7,8 +7,24 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header class="top"><h1>SCADA: система освітлення будівлі</h1></header>
+    <header class="top">
+        <h1>SCADA: система освітлення будівлі</h1>
+        <div class="scada-clock">
+            <b id="clock-time">@DateTime.Now.ToString("HH:mm:ss")</b>
+            <small id="clock-date">@DateTime.Now.ToString("dddd, d MMMM yyyy 'р.'", new System.Globalization.CultureInfo("uk-UA"))</small>
+        </div>
+    </header>
     <main>@RenderBody()</main>
+    <script>
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock-time').textContent =
+                now.toLocaleTimeString('uk-UA');
+            document.getElementById('clock-date').textContent =
+                now.toLocaleDateString('uk-UA',
+                    { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        }, 1000);
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
