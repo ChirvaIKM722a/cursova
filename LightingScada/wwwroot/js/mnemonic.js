@@ -30,6 +30,10 @@
             $('light-unit').textContent = 'лк';
         }
         setIndicator('ind-light', light);
+        if (light) {
+            const el = $('ind-light');
+            el.classList.toggle('alarm', light.value > Number(el.dataset.max));
+        }
 
         if (motion) {
             $('motion-value').textContent = motion.value >= 1 ? 'Рух виявлено' : 'Руху немає';
