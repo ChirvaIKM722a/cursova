@@ -1,6 +1,7 @@
 using LightingScada.Data;
 using LightingScada.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LightingScada.Controllers;
 
@@ -25,7 +26,7 @@ public class HomeController : Controller
 
     // Зберігає поточні показання з пам'яті в базу даних
     [HttpPost]
-    public IActionResult Save()
+    public async Task<IActionResult> Save()
     {
         foreach (var r in _store.GetAll())
         {
@@ -37,17 +38,17 @@ public class HomeController : Controller
                 MeasuredAtUtc = r.MeasuredAtUtc
             });
         }
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
         return RedirectToAction("History");
     }
 
     // Останні 50 збережених записів
-    public IActionResult History()
+    public async Task<IActionResult> History()
     {
-        var samples = _db.SensorSamples
+        var samples = await _db.SensorSamples
             .OrderByDescending(s => s.Id)
             .Take(50)
-            .ToList();
+            .ToListAsync();
         return View(samples);
     }
 }
