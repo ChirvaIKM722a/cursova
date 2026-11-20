@@ -1,10 +1,12 @@
 using LightingScada.Data;
 using LightingScada.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace LightingScada.Controllers;
 
+[Authorize]
 public class HomeController : Controller
 {
     private readonly SensorDataStore _store;
@@ -26,6 +28,8 @@ public class HomeController : Controller
 
     // Зберігає поточні показання з пам'яті в базу даних
     [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Policy = "CanReadSavings")]
     public async Task<IActionResult> Save()
     {
         foreach (var r in _store.GetAll())
@@ -51,4 +55,13 @@ public class HomeController : Controller
             .ToListAsync();
         return View(samples);
     }
+
+    // Сторінка, відкрита для всіх відвідувачів
+    [AllowAnonymous]
+    public IActionResult Privacy() => View();
+
+    [AllowAnonymous]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error() =>
+        Content("Сталася помилка під час обробки запиту. Спробуйте пізніше.");
 }

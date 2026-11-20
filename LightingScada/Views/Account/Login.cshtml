@@ -1,0 +1,17 @@
+@model LightingScada.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Вхід";
+}
+
+<div class="login-box">
+    <h2>Вхід в систему</h2>
+    <form method="post" asp-action="Login">
+        <input type="hidden" asp-for="ReturnUrl" />
+        <div asp-validation-summary="All" class="login-error"></div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" autocomplete="username" autofocus />
+        <label asp-for="Password"></label>
+        <input asp-for="Password" autocomplete="current-password" />
+        <button class="btn-save" type="submit">Увійти</button>
+    </form>
+</div>

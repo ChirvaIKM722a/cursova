@@ -57,6 +57,10 @@
     async function poll() {
         try {
             const response = await fetch('/Home/GetSensors', { cache: 'no-store' });
+            if (response.redirected) {   // сеанс завершено: сервер перенаправив на Login
+                window.location.reload();
+                return;
+            }
             if (response.ok) render(await response.json());
         } catch (e) {
             const badge = $('mqtt-status');

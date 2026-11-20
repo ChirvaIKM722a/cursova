@@ -9,9 +9,29 @@
 <body>
     <header class="top">
         <h1>SCADA: система освітлення будівлі</h1>
+        <nav class="top-nav">
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Home" asp-action="Index">Мнемосхема</a>
+                <a asp-controller="Home" asp-action="History">Історія</a>
+            }
+        </nav>
         <div class="scada-clock">
             <b id="clock-time">@DateTime.Now.ToString("HH:mm:ss")</b>
             <small id="clock-date">@DateTime.Now.ToString("dddd, d MMMM yyyy 'р.'", new System.Globalization.CultureInfo("uk-UA"))</small>
+        </div>
+        <div class="auth-box">
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <form method="post" asp-controller="Account" asp-action="Logout">
+                    <span>@User.Identity.Name</span>
+                    <button class="btn-logout">Вийти</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login">Увійти</a>
+            }
         </div>
     </header>
     <main>@RenderBody()</main>

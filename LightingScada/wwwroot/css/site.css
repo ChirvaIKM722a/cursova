@@ -73,3 +73,14 @@ a { color: #3f8fd2; }
 
 
 .indicator.alarm { fill: rgba(192,57,43,.25); stroke: #c0392b; stroke-width: 3; }
+
+/* навігація та вхід */
+.top-nav { display: flex; gap: 16px; margin-left: 24px; flex: 1; }
+.top-nav a, .auth-box a { color: #fff; text-decoration: none; }
+.top-nav a:hover, .auth-box a:hover { text-decoration: underline; }
+.auth-box form { display: flex; gap: 8px; align-items: center; margin: 0; }
+.btn-logout { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.6); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.login-box { max-width: 340px; margin: 40px auto; background: var(--card); padding: 20px 24px; border-radius: 10px; }
+.login-box form { display: flex; flex-direction: column; gap: 8px; }
+.login-box input { padding: 8px; border: 1px solid var(--off); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.login-error { color: #c0392b; font-size: 14px; }
